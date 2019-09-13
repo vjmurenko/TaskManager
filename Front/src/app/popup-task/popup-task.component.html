@@ -1,0 +1,81 @@
+<form #form ="ngForm"  autocomplete="off" (submit)="onSubmit(form)">
+    <input type ="hidden" name="Id" [ngModel]="formData.Id" >
+
+    <div class="form-group ">
+        <label>Name</label>
+        <div class="input-group">
+            <input  name="Name" #Name="ngModel" [(ngModel)]="formData.Name" class="form-control" required  >
+        </div>
+    </div>
+
+    <div class="form-group ">
+        <label>Description</label>
+        <div class="input-group">
+            <input  name="Description" #Description="ngModel" [(ngModel)]="formData.Description" class="form-control" required  >
+        </div>
+    </div>
+
+    <div class="form-group ">
+        <label>Complexity</label>
+        <br>
+        <input type="hidden"  name ="ComplexityId" [(ngModel)]="+Complexity.value">
+
+        <select name="Complexity" #Complexity [(ngModel)]="complexityIndex"  >
+            <option *ngFor="let complexity of complexityService.complexityList ; let i = index"
+                    [value]="complexity.Id"> {{complexity.Name}} </option>
+        </select>
+    </div>
+
+    <div class="form-group ">
+        <label>StartDate</label>
+        <div class="input-group">
+            <input type="date" name="StartDate" #StartDate (ngModelChange)="StartDate.value"
+                   [ngModel]="formData.StartDate | date:'yyyy-MM-dd'" class="form-control" required  >
+        </div>
+    </div>
+
+    <div class="form-group ">
+        <label>EndDate</label>
+        <div class="input-group">
+            <input  type="date" name="EndDate" #EndDate (ngModelChange)="EndDate.value"
+                    [ngModel]="formData.EndDate | date:'yyyy-MM-dd' " class="form-control" required>
+        </div>
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md-6 ">
+            <label>Employee</label>
+            <br>
+            <input type="hidden" name="EmployeeId" [(ngModel)]="+Employee.value">
+
+            <select name="Employee" #Employee [(ngModel)]="employeeIndex" >
+                <option *ngFor="let employee of employeeService.employeeList ; let i = index" [value]="employee.Id"> {{employee.Name}} </option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6 ">
+            <label>Phone</label>
+            <br>
+
+            <div class="input-group">
+                <input  name="Phone" #Phone="ngModel" [ngModel]="employeeService.employeeList[Employee.selectedIndex].Phone" class="form-control" readonly  >
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group ">
+        <label>Status</label>
+        <br>
+        <input type="hidden" name="StatusId" [(ngModel)]="+Status.value">
+
+        <select name="Status" #Status  [(ngModel)]="statusIndex" >
+            <option *ngFor="let status of statusService.statusList ; let i = index" [value]="status.Id"> {{status.Name}} </option>
+        </select>
+    </div>
+
+    <button type="submit" class ="btn btn-dark form-group col-md-6" [disabled]="form.invalid" >Submit</button>
+    <button type="button" class="btn btn-outline-dark  form-group col-md-6" [mat-dialog-close]  ><i class="fa fa-close"></i> Close</button>
+
+</form>

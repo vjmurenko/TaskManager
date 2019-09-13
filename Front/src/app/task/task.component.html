@@ -1,0 +1,69 @@
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter by task name">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef> Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Description">
+        <th mat-header-cell *matHeaderCellDef> Description</th>
+        <td mat-cell *matCellDef="let element"> {{element.Description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Complexity.Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Complexity</th>
+        <td mat-cell *matCellDef="let element"> {{element.Complexity.Name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="StartDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> StartDate</th>
+        <td mat-cell *matCellDef="let element"> {{element.StartDate | date:'yyyy-MM-dd'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="EndDate">
+        <th mat-header-cell *matHeaderCellDef> EndDate</th>
+        <td mat-cell *matCellDef="let element"> {{element.EndDate | date:'yyyy-MM-dd' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Employee">
+        <th mat-header-cell *matHeaderCellDef> Employee</th>
+        <td mat-cell *matCellDef="let element"> {{element.Employee.Name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Phone">
+        <th mat-header-cell *matHeaderCellDef> Phone</th>
+        <td mat-cell *matCellDef="let element"> {{element.Employee.Phone | mask: '+0 (000) 000-00-00'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef> Status</th>
+        <td mat-cell *matCellDef="let element"> {{element.Status.Name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Buttons">
+        <th mat-header-cell *matHeaderCellDef>
+            <a class="btn btn-success text-white" (click)="addOrEditTask()"><i class="fa fa-plus-square"></i> Create new
+            </a>
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <a class="btn btn-sm btn-info text-white ml-1" (click)="addOrEditTask(element)"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-sm btn-danger text-white ml-1" (click)="deleteTask(element.Id)"><i
+                    class="fa fa-trash"></i></a>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[3, 4, 5, 10,20]"
+        showFirstLastButtons>
+</mat-paginator>
+
+
+
